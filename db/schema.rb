@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 20171116164057) do
 
   create_table "games", force: :cascade do |t|
+    t.datetime "matchDay"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(version: 20171116164057) do
     t.string "name"
     t.string "password"
     t.string "username"
+    t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
