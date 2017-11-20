@@ -11,6 +11,26 @@ Team.delete_all
 Game.delete_all
 Player.delete_all
 
-games = Game.create();
+player1 = Player.create(name: "Alberto António",    password:"46f94c8de14fb36680850768ff1b7f2a", username:"albert",     score: 23);
+player2 = Player.create(name: "Maria Josefa",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"josefa",     score: 6);
+player3 = Player.create(name: "Rui Unas",           password:"46f94c8de14fb36680850768ff1b7f2a", username:"sexyboy",    score: 31);
+player4 = Player.create(name: "Pedro Cebola",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"cebola",     score: 12);
 
-Team.create([ {game: games},{ game:games} ]);
+game1 = Game.create(matchDay: DateTime.new(2018,9,19,17,30) );
+game2 = Game.create(matchDay: DateTime.new(2018,10,7,15,40) );
+
+team1 = Team.create(game: game1);
+team2 = Team.create(game: game1);
+team3 = Team.create(game: game2);
+team4 = Team.create(game: game2);
+
+PlayerTeam.create([
+    {team: team1, player:player1},
+    {team: team1, player:player2},
+    {team: team2, player:player3},
+    {team: team2, player:player4},
+    {team: team3, player:player1},
+    {team: team3, player:player3},
+    {team: team4, player:player2},
+    {team: team4, player:player4},
+]);
