@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 20171116164057) do
   end
 
   create_table "player_teams", force: :cascade do |t|
-    t.decimal "goals"
-    t.decimal "faults"
+    t.integer "goals"
+    t.integer "faults"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "player_id"

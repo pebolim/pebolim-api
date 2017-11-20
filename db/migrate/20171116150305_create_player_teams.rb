@@ -1,8 +1,8 @@
 class CreatePlayerTeams < ActiveRecord::Migration[5.1]
   def change
     create_table :player_teams do |t|
-      t.numeric :goals
-      t.numeric :faults
+      t.integer :goals
+      t.integer :faults
 
       t.timestamps
     end
