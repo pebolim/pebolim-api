@@ -4,4 +4,9 @@ Rails.application.routes.draw do
   get '/game/index', to: 'games#index'
   get '/game/:id', to: 'games#show'
   post '/game', to: 'games#create'
+
+  #----players----
+  get '/users', to: 'players#index'
+  get '/user/:userid/games', to: 'players#showGames'
+  get '/user/:userid/game/:gameid', to: 'players#showGameByUser'
 end
