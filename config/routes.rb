@@ -7,6 +7,6 @@ Rails.application.routes.draw do
 
   #----players----
   get '/users', to: 'players#index'
-  get '/user/:userid/games', to: 'players#showGames'
+  get '/user/:userid/games', to: 'players#showGamesByUser'
   get '/user/:userid/game/:gameid', to: 'players#showGameByUser'
 end
