@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'authentication/register'
+
+  get 'authentication/signin'
+
+  get 'authentication/login'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get '/game/index', to: 'games#index'
