@@ -4,7 +4,7 @@ class CreatePlayers < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :password
       t.string :username
-      t.integer :score
+      t.integer :age
 
       t.timestamps
     end
