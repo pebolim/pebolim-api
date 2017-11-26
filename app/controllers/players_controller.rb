@@ -6,12 +6,15 @@ class PlayersController < ApplicationController
         @players = Player.all
     end
 
-    def showGames
+    def showGamesByUser
         player = Player.find(get_user_id)
         @games = []
+        @teams = []
         player.teams.each do |team|
             @games.push(Game.find(team["game_id"]))
+            @teams.push(PlayerTeam.where(team_id: team["id"]))
         end
+        puts @teams
     end
 
     def showGameByUser
