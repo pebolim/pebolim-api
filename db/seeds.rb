@@ -11,10 +11,10 @@ Team.delete_all
 Game.delete_all
 Player.delete_all
 
-player1 = Player.create(name: "Alberto António",    password:"46f94c8de14fb36680850768ff1b7f2a", username:"albert",     score: 23);
-player2 = Player.create(name: "Maria Josefa",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"josefa",     score: 6);
-player3 = Player.create(name: "Rui Unas",           password:"46f94c8de14fb36680850768ff1b7f2a", username:"sexyboy",    score: 31);
-player4 = Player.create(name: "Pedro Cebola",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"cebola",     score: 12);
+player1 = Player.create(name: "Alberto António",    password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", username:"albert",     score: 23);
+player2 = Player.create(name: "Maria Josefa",       password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", username:"josefa",     score: 6);
+player3 = Player.create(name: "Rui Unas",           password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", username:"sexyboy",    score: 31);
+player4 = Player.create(name: "Pedro Cebola",       password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", username:"cebola",     score: 12);
 
 game1 = Game.create(matchDay: DateTime.new(2018,9,19,17,30) );
 game2 = Game.create(matchDay: DateTime.new(2018,10,7,15,40) );

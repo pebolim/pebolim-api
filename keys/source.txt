@@ -1,0 +1,1 @@
+https://en.wikibooks.org/wiki/Cryptography/Generate_a_keypair_using_OpenSSL

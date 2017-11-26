@@ -25,11 +25,10 @@ gem 'jbuilder', '~> 2.5'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
-# Use JWT for handling Authorization and Authetication
+# Use JWT and OpenSSL for handling Authorization and Authetication
+# https://github.com/jwt/ruby-jwt
 gem 'jwt'
-
-# Use figaro for store API's keys
-gem 'figaro'
+gem 'openssl'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
