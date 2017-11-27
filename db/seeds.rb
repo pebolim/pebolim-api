@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+#Para recriar a db rails db:schema:load
+
 Team.delete_all
 Game.delete_all
 Player.delete_all
@@ -15,13 +17,19 @@ player2 = Player.create(name: "Maria Josefa",       password:"46f94c8de14fb36680
 player3 = Player.create(name: "Rui Unas",           password:"46f94c8de14fb36680850768ff1b7f2a", username:"sexyboy",    age: 31);
 player4 = Player.create(name: "Pedro Cebola",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"cebola",     age: 12);
 
-game1 = Game.create(match_day: DateTime.new(2018,9,19,17,30),local: "IPT", is_private: false; );
-game2 = Game.create(matchDay: DateTime.new(2018,10,7,15,40),local: "IPT", is_private: true; );
+game1 = Game.create(match_day: DateTime.new(2018,9,19,17,30),local: "IPT", is_private: false );
+game2 = Game.create(match_day: DateTime.new(2018,10,7,15,40),local: "IPT", is_private: true );
 
 team1 = Team.create();
 team2 = Team.create();
 team3 = Team.create();
 team4 = Team.create();
 
+team1.players << [player1,player2]
+team2.players << [player3,player4]
 
+team3.players << [player3,player2]
+team4.players << [player1,player4]
 
+game1.teams << [team1,team2]
+game2.teams << [team3,team4]
