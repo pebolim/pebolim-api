@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171126153635) do
+ActiveRecord::Schema.define(version: 20171127191353) do
 
   create_table "games", force: :cascade do |t|
     t.datetime "match_day"
@@ -18,13 +18,6 @@ ActiveRecord::Schema.define(version: 20171126153635) do
     t.boolean "is_private"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "games_teams", id: false, force: :cascade do |t|
-    t.integer "team_id", null: false
-    t.integer "game_id", null: false
-    t.boolean "winner"
-    t.integer "score"
   end
 
   create_table "players", force: :cascade do |t|
@@ -39,6 +32,17 @@ ActiveRecord::Schema.define(version: 20171126153635) do
   create_table "players_teams", id: false, force: :cascade do |t|
     t.integer "team_id", null: false
     t.integer "player_id", null: false
+  end
+
+  create_table "team_games", force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "game_id"
+    t.boolean "winner"
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_team_games_on_game_id"
+    t.index ["team_id"], name: "index_team_games_on_team_id"
   end
 
   create_table "teams", force: :cascade do |t|
