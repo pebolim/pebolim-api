@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   post '/game', to: 'games#create'
 
   #----players----
-  get '/users', to: 'players#index'
-  get '/user/:userid/games', to: 'players#showGamesByUser'
-  get '/user/:userid/game/:gameid', to: 'players#showGameByUser'
+  get '/players', to: 'players#index'
+  get '/player/:userid/games', to: 'players#showGamesByUser'
+  get '/player/:userid/game/:gameid', to: 'players#showGameByUser'
 end

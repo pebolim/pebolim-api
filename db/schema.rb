@@ -10,39 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171116164057) do
+ActiveRecord::Schema.define(version: 20171127191353) do
 
   create_table "games", force: :cascade do |t|
-    t.datetime "matchDay"
+    t.datetime "match_day"
+    t.string "local"
+    t.boolean "is_private"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "player_teams", force: :cascade do |t|
-    t.integer "goals"
-    t.integer "faults"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "player_id"
-    t.integer "team_id"
-    t.index ["player_id"], name: "index_player_teams_on_player_id"
-    t.index ["team_id"], name: "index_player_teams_on_team_id"
   end
 
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.string "password"
     t.string "username"
+    t.integer "age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "players_teams", id: false, force: :cascade do |t|
+    t.integer "team_id", null: false
+    t.integer "player_id", null: false
+  end
+
+  create_table "team_games", force: :cascade do |t|
+    t.integer "team_id"
+    t.integer "game_id"
+    t.boolean "winner"
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_team_games_on_game_id"
+    t.index ["team_id"], name: "index_team_games_on_team_id"
   end
 
   create_table "teams", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "game_id"
-    t.index ["game_id"], name: "index_teams_on_game_id"
   end
 
 end
