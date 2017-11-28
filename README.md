@@ -8,16 +8,16 @@ ToDo
 
 ### Prerequisites
 
-Install:
+#### Install:
     -Vagrant
     -Text Editor (Visual Code, Sublime, etc)
     -Command Line (Git Bash, Powershell, etc)
-Dependencies:
+##### Dependencies:
     -Vagrant Box = "jadesystems/rails-5-1"
 
 ### Installing
 
-ToDo
+Clone/Download the pebolim-api project to your system.
 
 ## Running the tests
 
@@ -33,7 +33,14 @@ ToDo
 
 ## Deployment
 
-ToDo
+    -Open terminal
+    -Go to your project (cd project-api/)
+    -vagrant up
+    -vagrant ssh
+    -cd ../../vagrant
+    -rails db:migrate
+    -rails server
+    -Open browser with the url generated.
 
 ## Built With
 
@@ -58,7 +65,7 @@ ToDo
 * **Rafael Escudeiro** - [rafescu](https://github.com/rafescu)
 * **Ricardo António** - [ricardma](https://github.com/ricardma)
 
-See also the list of [contributors](https://github.com/pebolim/pebolim-frontend/graphs/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/pebolim/pebolim-api/graphs/contributors) who participated in this project.
 
 ## License
 
