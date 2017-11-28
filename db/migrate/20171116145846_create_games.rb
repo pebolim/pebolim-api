@@ -3,7 +3,6 @@ class CreateGames < ActiveRecord::Migration[5.1]
     create_table :games do |t|
       t.datetime :match_day 
       t.string :local
-      t.boolean :is_private
 
       t.timestamps
     end

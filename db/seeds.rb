@@ -8,7 +8,7 @@
 
 
 #Para recriar a db rails db:setup
-
+=begin
 player1 = Player.create(name: "Alberto António",    password:"46f94c8de14fb36680850768ff1b7f2a", username:"albert",     age: 23);
 player2 = Player.create(name: "Maria Josefa",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"josefa",     age: 6);
 player3 = Player.create(name: "Rui Unas",           password:"46f94c8de14fb36680850768ff1b7f2a", username:"sexyboy",    age: 31);
@@ -36,3 +36,4 @@ team2.players << [player3,player4]
 
 team3.players << [player3,player2]
 team4.players << [player1,player4]
+=end

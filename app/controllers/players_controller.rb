@@ -8,14 +8,14 @@ class PlayersController < ApplicationController
     
     def showGamesByUser
         player = Player.find(get_user_id)
-        @teamGames = []
+        @teams = []
         @games = []
         player.teams.each do |team|
+            @teams.push(team["id"])
             team.games.each do |game|
                 g = Game.find(game["id"])
                 @games.push(game)
             end
-            @teamGames.push(TeamGame.where("team_id = ?", team["id"]))
         end
     end
 
