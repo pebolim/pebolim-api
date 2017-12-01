@@ -1,9 +1,9 @@
 class NewDatabase < ActiveRecord::Migration[5.1]
   def change
     create_table :users do |t|
-      t.string :name
+      t.string :email
       t.string :password
-      t.string :username
+      t.string :nickname
       t.integer :age
 
       t.timestamps
@@ -25,7 +25,7 @@ class NewDatabase < ActiveRecord::Migration[5.1]
     create_table :casual_games do |t|
       t.string :local
       t.datetime :match_day 
-      t.string :local
+      t.string :url
       t.boolean :is_private     
       t.integer :max_goals
       t.integer :result1
