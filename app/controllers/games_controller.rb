@@ -31,4 +31,8 @@ class GamesController < ApplicationController
     def find_by_ID
         params[:id]
     end
+
+    def game_params
+        params.require(:school).permit(:description,:name,:code,:initials,:institution_id)
+    end
 end
