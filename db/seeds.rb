@@ -19,12 +19,16 @@ team1 = Team.create(name:"Reis dos matrecos",attacker:player1["id"], defender:pl
 team2 = Team.create(name:"Abébias Clube de Portugal",attacker:player3["id"],defender:player4["id"]);
 team3 = Team.create(name:"Roscas e Pregos",attacker:player1["id"],defender:player3["id"]);
 team4 = Team.create(name:"Qualquercoisa",attacker:player2["id"],defender: player4["id"]);
+team5 = Team.create(name:"Equipa5",attacker:player1["id"],defender:player4["id"]);
+team6 = Team.create(name:"Equipa6",attacker:player2["id"],defender: player3["id"]);
 
 gamestate1 = GameState.create(name:"finished");
 gamestate2 = GameState.create(name:"finished");
+gamestate3 = GameState.create(name:"finished");
 
 game1 = CasualGame.create(local:"IPT",match_day:DateTime.new(2018,9,19,17,30),url: "someURL",is_private: false,max_goals: 5,result1: 5,result2: 3,finish_date: DateTime.new(2018,9,19,17,30),best_atacker: 1,best_defender: 2,game_state_id: gamestate1["id"],owner_id: player1["id"],team1_id: team1["id"],team2_id:team2["id"]);
 game2= CasualGame.create(local:"IPT",match_day:DateTime.new(2018,10,19,17,30),url: "someURL",is_private: false,max_goals: 3,result1: 3,result2: 0,finish_date: DateTime.new(2018,10,19,17,30),best_atacker: 3,best_defender: 1,game_state_id: gamestate2["id"],owner_id: player3["id"],team1_id: team3["id"],team2_id:team4["id"])
+game3= CasualGame.create(local:"IPT",match_day:DateTime.new(2018,11,19,17,30),url: "someURL",is_private: false,max_goals: 3,result1: 0,result2: 3,finish_date: DateTime.new(2018,11,19,17,30),best_atacker: 3,best_defender: 1,game_state_id: gamestate2["id"],owner_id: player3["id"],team1_id: team5["id"],team2_id:team6["id"])
 
 =begin
 gameGoals = CasualGoal.create(game_id:game1,player_id:team1["attacker"])
