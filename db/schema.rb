@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20171128183416) do
   create_table "casual_games", force: :cascade do |t|
     t.string "local"
     t.datetime "match_day"
+    t.string "url"
     t.boolean "is_private"
     t.integer "max_goals"
     t.integer "result1"
@@ -110,9 +111,9 @@ ActiveRecord::Schema.define(version: 20171128183416) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "email"
     t.string "password"
-    t.string "username"
+    t.string "nickname"
     t.integer "age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
