@@ -3,25 +3,27 @@ class PlayersController < ApplicationController
     before_action :set_default_response_format
     
     def index
-        @players = Player.all
+        @players = User.all
     end
     
     def showGamesByUser
-        player = Player.find(get_user_id)
-        @teams = []
+        player = User.find(get_user_id)
+        teams = []
         @games = []
         player.teams.each do |team|
-            @teams.push(team["id"])
-            team.games.each do |game|
-                g = Game.find(game["id"])
-                @games.push(game)
-            end
+            g = CasualGame.find_by("team1_id = ? OR team2_id = ?",team["id"],team["id"])
+            @games.push(g)
         end
     end
 
     def showGameByUser
-        team = PlayerTeam.find(get_user_id)
-        @games = Game.all
+        @game = CasualGame.find(get_game_id)
+        @owner = User.find(@game.owner_id)["nickname"]
+        @best_atacker = User.find(@game.best_atacker)["nickname"]
+        @best_defender = User.find(@game.best_defender)["nickname"]
+        @game_state = GameState.find(@game.game_state_id)["name"]
+        @team1 = Team.find(@game.team1_id)["name"]
+        @team2 = Team.find(@game.team2_id)["name"]
     end
 
     #post

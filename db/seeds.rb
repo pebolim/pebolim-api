@@ -8,19 +8,28 @@
 
 
 #Para recriar a db rails db:setup
+
+player1 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"albert",age: 23);
+player2 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"josefa",age: 6);
+player3 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"sexyboy",age: 31);
+player4 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"cebola",age: 12);
+
+
+team1 = Team.create(name:"Reis dos matrecos",attacker:player1["id"], defender:player2["id"]);
+team2 = Team.create(name:"Abébias Clube de Portugal",attacker:player3["id"],defender:player4["id"]);
+team3 = Team.create(name:"Roscas e Pregos",attacker:player1["id"],defender:player3["id"]);
+team4 = Team.create(name:"Qualquercoisa",attacker:player2["id"],defender: player4["id"]);
+
+gamestate1 = GameState.create(name:"finished");
+gamestate2 = GameState.create(name:"finished");
+
+game1 = CasualGame.create(local:"IPT",match_day:DateTime.new(2018,9,19,17,30),url: "someURL",is_private: false,max_goals: 5,result1: 5,result2: 3,finish_date: DateTime.new(2018,9,19,17,30),best_atacker: 1,best_defender: 2,game_state_id: gamestate1["id"],owner_id: player1["id"],team1_id: team1["id"],team2_id:team2["id"]);
+game2= CasualGame.create(local:"IPT",match_day:DateTime.new(2018,10,19,17,30),url: "someURL",is_private: false,max_goals: 3,result1: 3,result2: 0,finish_date: DateTime.new(2018,10,19,17,30),best_atacker: 3,best_defender: 1,game_state_id: gamestate2["id"],owner_id: player3["id"],team1_id: team3["id"],team2_id:team4["id"])
+
 =begin
-player1 = Player.create(name: "Alberto António",    password:"46f94c8de14fb36680850768ff1b7f2a", username:"albert",     age: 23);
-player2 = Player.create(name: "Maria Josefa",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"josefa",     age: 6);
-player3 = Player.create(name: "Rui Unas",           password:"46f94c8de14fb36680850768ff1b7f2a", username:"sexyboy",    age: 31);
-player4 = Player.create(name: "Pedro Cebola",       password:"46f94c8de14fb36680850768ff1b7f2a", username:"cebola",     age: 12);
+gameGoals = CasualGoal.create(game_id:game1,player_id:team1["attacker"])
 
-game1 = Game.create(match_day: DateTime.new(2018,9,19,17,30),local: "IPT", is_private: false );
-game2 = Game.create(match_day: DateTime.new(2018,10,7,15,40),local: "IPT", is_private: true );
 
-team1 = Team.create();
-team2 = Team.create();
-team3 = Team.create();
-team4 = Team.create();
 
 teams = Team.all
 games = Game.all
@@ -30,6 +39,7 @@ games.each do |g|
     TeamGame.create(team: t[0] ,game: g, winner: true, score: rand(4))
     TeamGame.create(team: t[1] ,game: g, winner: false, score: rand(4))
 end
+
 
 team1.players << [player1,player2]
 team2.players << [player3,player4]
