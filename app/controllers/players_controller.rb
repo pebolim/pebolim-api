@@ -2,17 +2,29 @@ class PlayersController < ApplicationController
 
     before_action :set_default_response_format
     
+
     def index
         @players = User.all
     end
     
     def showGamesByUser
         player = User.find(get_user_id)
-        teams = []
         @games = []
-        player.teams.each do |team|
+        @winner = []
+        @teams = []
+        player.teams.sort_by{|e| e[:id]}.each do |team|
             g = CasualGame.find_by("team1_id = ? OR team2_id = ?",team["id"],team["id"])
             @games.push(g)
+            t = []
+            t.push(Team.find(g.team1_id)["name"])
+            t.push(Team.find(g.team2_id)["name"])
+            @teams.push(t)
+            if((g.result1 > g.result2) && g.team1_id==team["id"] || (g.result2 > g.result1) && g.team2_id==team["id"])
+                @winner.push(true)
+            else
+                @winner.push(false)
+            end
+
         end
     end
 
