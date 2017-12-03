@@ -1,17 +1,17 @@
 class ApplicationController < ActionController::API
 
-    def get_user_by_token(token, request)
-        begin
-            rsa_public = OpenSSL::PKey::RSA.new(File.read('../../keys/public_key.pem')) 
-            payload = JWT.decode token, rsa_public, true, { :algorithm => 'RS256' }
+    helper_method :get_user_by_token
 
-            if (payload["ip_address"] == request.remote_ip) && (payload["expiration_date"] < DateTime.now)
-                return payload["user_id"]
-            else
-                return 0
-            end
-        rescue
-             return 0
+    def get_user_by_token(request)
+
+        @current_user = 0;
+
+        filename = File.join(Rails.root, 'keys', 'public_key.pem');
+        rsa_public = OpenSSL::PKey::RSA.new(File.read(filename));
+        payload = JWT.decode request.headers["Authorization"], rsa_public, true, { :algorithm => 'RS256' }
+
+        if payload[0]["ip_address"] == request.remote_ip && !DateTime.parse(payload[0]["expiration_date"]).past?
+            @current_user = payload[0]["user_id"];
         end
     end
 

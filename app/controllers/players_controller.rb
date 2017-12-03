@@ -8,7 +8,9 @@ class PlayersController < ApplicationController
     end
     
     def showGamesByUser
-        player = User.find(get_user_id)
+        get_user_by_token(request)
+
+        player = User.find(@current_user)
         @games = []
         @winner = []
         @teams = []
