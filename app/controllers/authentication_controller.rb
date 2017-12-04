@@ -5,16 +5,17 @@ class AuthenticationController < ApplicationController
     @success = false
     @token = nil
 
-    if params.has_key?(:username) && params.has_key?(:password) && params.has_key?(:name)
+    if params.has_key?(:email) && params.has_key?(:password) && params.has_key?(:nickname) && params.has_key?(:age)
       
       matched = /[^'"\[\]{}]{6,15}/.match(params[:password])
 
       if matched.to_s.eql?(params[:password])
         
-        user = Player.new(
-          name: params[:name],
-          username: params[:username],
-          password: Digest::SHA256.hexdigest(params[:password])
+        user = User.new(
+          nickname: params[:nickname],
+          email: params[:email],
+          password: Digest::SHA256.hexdigest(params[:password]),
+          age: params[:age]
           )
         user.save
         
@@ -40,10 +41,10 @@ class AuthenticationController < ApplicationController
     @success = false
     @token = nil
 
-    if params.has_key?(:username) && params.has_key?(:password)
+    if params.has_key?(:email) && params.has_key?(:password)
 
       user = Player.where(
-        'username' => params[:username],
+        'email' => params[:email],
         'password' => Digest::SHA256.hexdigest(params[:password])
         ).first
 
