@@ -43,7 +43,7 @@ class AuthenticationController < ApplicationController
 
     if params.has_key?(:email) && params.has_key?(:password)
 
-      user = Player.where(
+      user = User.where(
         'email' => params[:email],
         'password' => Digest::SHA256.hexdigest(params[:password])
         ).first
