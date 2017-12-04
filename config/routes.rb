@@ -3,8 +3,9 @@ Rails.application.routes.draw do
   post '/signin', to: 'authentication#signin'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-  get '/game/index', to: 'games#index'
+  put '/game/join/:id', to: 'games#joinGame'
+  get '/game/index', to: 'games#index', as: 'casual_games'
+  get '/game/:id/players', to: 'games#getPlayers'
   get '/game/:id', to: 'games#show'
   post '/game', to: 'games#create'
 

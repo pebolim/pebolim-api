@@ -9,7 +9,7 @@
 
 #Para recriar a db rails db:setup
 
-player1 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"albert",age: 23);
+player1 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"yEPZ",age: 23,image_url: "http://blog.opovo.com.br/portugalsempassaporte/wp-content/uploads/sites/42/2013/07/Scolari.jpg");
 player2 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"josefa",age: 6);
 player3 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"sexyboy",age: 31);
 player4 = User.create(password:"46f94c8de14fb36680850768ff1b7f2a", nickname:"cebola",age: 12);
