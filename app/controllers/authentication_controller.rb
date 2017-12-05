@@ -11,19 +11,19 @@ class AuthenticationController < ApplicationController
 
       if matched.to_s.eql?(params[:password])
         
-        user = User.new(
+        @user = User.new(
           nickname: params[:nickname],
           email: params[:email],
           password: Digest::SHA256.hexdigest(params[:password]),
           age: params[:age]
           )
-        user.save
+        @user.save
         
         filename = File.join(Rails.root, 'keys', 'private_key.pem')
         rsa_private = OpenSSL::PKey::RSA.new(File.read(filename))
         
         payload = {
-          :user_id => user["id"],
+          :user_id => @user["id"],
           :ip_address => request.remote_ip,
           :expiration_date => DateTime.now + 3.hours
         }
@@ -43,17 +43,17 @@ class AuthenticationController < ApplicationController
 
     if params.has_key?(:email) && params.has_key?(:password)
 
-      user = User.where(
+      @user = User.where(
         'email' => params[:email],
         'password' => Digest::SHA256.hexdigest(params[:password])
         ).first
 
-      if user!=nil
+      if @user!=nil
         filename = File.join(Rails.root, 'keys', 'private_key.pem')
         rsa_private = OpenSSL::PKey::RSA.new(File.read(filename))
         
         payload = {
-          :user_id => user["id"],
+          :user_id => @user["id"],
           :ip_address => request.remote_ip,
           :expiration_date => DateTime.now + 3.hours
         }

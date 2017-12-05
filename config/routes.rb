@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get '/players', to: 'players#index'
   get '/player/games', to: 'players#showGamesByUser'
   get '/player/game/:gameid', to: 'players#showGameByUser'
+  get '/player', to: 'players#getProfile'
 end

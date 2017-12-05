@@ -6,6 +6,10 @@ class PlayersController < ApplicationController
     def index
         @players = User.all
     end
+
+    def getProfile
+        @player = get_user_by_token(request)
+    end
     
     def showGamesByUser
         get_user_by_token(request)
