@@ -8,7 +8,8 @@ class PlayersController < ApplicationController
     end
 
     def getProfile
-        @player = get_user_by_token(request)
+        p = get_user_by_token(request)
+        @player = User.find(@current_user)
     end
     
     def showGamesByUser
