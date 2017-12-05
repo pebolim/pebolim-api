@@ -3,7 +3,6 @@ class ApplicationController < ActionController::API
     helper_method :get_user_by_token
 
     def get_user_by_token(request)
-
         @current_user = 0;
 
         filename = File.join(Rails.root, 'keys', 'public_key.pem');
