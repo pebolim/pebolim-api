@@ -60,6 +60,8 @@ class AuthenticationController < ApplicationController
     
         @token = JWT.encode payload, rsa_private, 'RS256'
         @success = true
+      else
+
       end
     end
   end

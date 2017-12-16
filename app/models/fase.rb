@@ -1,3 +1,0 @@
-class Fase < ApplicationRecord
-
-end

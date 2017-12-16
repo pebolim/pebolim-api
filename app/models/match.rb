@@ -1,9 +1,8 @@
 class Match < ApplicationRecord
-    belongs_to :tournament, class_name: 'Tournament'
-    belongs_to :team1, class_name: 'Team'
-    belongs_to :team2, class_name: 'Team'
-    belongs_to :fase, class_name: 'Fase'
+    belongs_to :tournament
 
-    has_many :games, :class_name => 'TournamentGame', :foreign_key => 'match_id'
-    
+    has_and_belongs_to_many :teams
+
+    has_many :encounters
+    has_many :games, through: :encounters
 end
