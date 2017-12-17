@@ -8,14 +8,25 @@ class GamesController < ApplicationController
     #     @games = Game.all
     # end
 
-    # def show
-    #     @game = Game.find(find_by_ID)
-    #     @teams = Team.where('game_id' => @game["id"])
-        
-    # end
+    def gameDetails
+        @game = CasualGame.find_by(:url => params[:id])       
+        @teams = Team.where("id = ? OR id = ?", @game.team1_id, @game.team2_id)      
+    end
 
-    def get_teams
-        
+
+    #TODO: verificar parametros e validar o user
+    def startGame     
+        @game = CasualGame.find_by(:url => params[:id])   
+
+        @game.game_state = GameState.find(2)
+        @game.start_date = DateTime.now
+        @game.is_locked = true
+
+        if @game.save
+            render json: { message: "OK", status: 200 }.to_json   
+        else
+            render json: { message: "Not OK", status: 500 }.to_json
+        end
     end
 
     def getPlayers
@@ -99,12 +110,6 @@ class GamesController < ApplicationController
         @params = game_params
         @game = CasualGame.new
 
-        
-        @team1 = Team.new
-        @team2 = Team.new
-        @team1.save
-        @team2.save
-        
         @game.local = @params[:local]
         @game.is_private = @params[:is_private]
         @game.url = SecureRandom.urlsafe_base64
@@ -112,10 +117,11 @@ class GamesController < ApplicationController
         @game.match_day = DateTime.new(date.year, date.month, date.mday, @params[:hour], @params[:minutes])
         @game.game_state = GameState.find(1)
         @game.owner = User.find(1)
-        
+        @game.is_locked = false
+
         #logger.info(@game.inspect) # redirect_to casual_games_path @game
-        @game.team1 = @team1
-        @game.team2 = @team2
+        @game.team1 = Team.new
+        @game.team2 = Team.new
 
         if @game.save
             render json: { message: "OK", status: 201, url_id: @game.url }.to_json   
@@ -137,5 +143,9 @@ class GamesController < ApplicationController
 
     def game_params
         params.require(:game).permit(:local,:is_private,:hour,:minutes,:start_date)
+    end
+
+    def game_params
+        params.permit(:local,:is_private,:hour,:minutes,:start_date)
     end
 end

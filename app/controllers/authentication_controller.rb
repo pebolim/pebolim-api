@@ -5,7 +5,7 @@ class AuthenticationController < ApplicationController
     @success = false
     @token = nil
 
-    if params.has_key?(:email) && params.has_key?(:password) && params.has_key?(:nickname) && params.has_key?(:age)
+    if params.has_key?(:email) && params.has_key?(:password) && params.has_key?(:nickname)
       
       matched = /[^'"\[\]{}]{6,15}/.match(params[:password])
 
@@ -29,16 +29,21 @@ class AuthenticationController < ApplicationController
         }
     
         @token = JWT.encode payload, rsa_private, 'RS256'
-        @success = true
-
+        @status = 200
+      else
+        @status = 500
+        @message="Your password cannot have the following characters=> ^'\"[]{}  and need to have between 6 and 15 characters."
       end
+    else
+      @status = 500
+      @message="Teh fields 'email', 'password' and 'nickname' are necessary"
     end
     render "login"
   end
 
   def login
 
-    @success = false
+    @status = 500
     @token = nil
 
     if params.has_key?(:email) && params.has_key?(:password)
@@ -59,9 +64,10 @@ class AuthenticationController < ApplicationController
         }
     
         @token = JWT.encode payload, rsa_private, 'RS256'
-        @success = true
+        @status = 200
       else
-
+        @status = 500
+        @message = "Invalid credentials"
       end
     end
   end
