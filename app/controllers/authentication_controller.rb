@@ -38,7 +38,7 @@ class AuthenticationController < ApplicationController
 
   def login
 
-    @success = false
+    @status = 500
     @token = nil
 
     if params.has_key?(:email) && params.has_key?(:password)
@@ -59,7 +59,7 @@ class AuthenticationController < ApplicationController
         }
     
         @token = JWT.encode payload, rsa_private, 'RS256'
-        @success = true
+        @status = 200
       end
     end
   end
