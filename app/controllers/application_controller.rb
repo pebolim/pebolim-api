@@ -11,6 +11,10 @@ class ApplicationController < ActionController::API
 
         if payload[0]["ip_address"] == request.remote_ip && !DateTime.parse(payload[0]["expiration_date"]).past?
             @current_user = payload[0]["user_id"];
+            @status=200
+        else
+            @message="Unauthorized"
+            @status=500
         end
     end
 

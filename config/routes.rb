@@ -14,4 +14,13 @@ Rails.application.routes.draw do
   get '/player/games', to: 'players#showGamesByUser'
   get '/player/game/:gameid', to: 'players#showGameByUser'
   get '/player', to: 'players#getProfile'
+
+  #----teams----
+  get '/teams', to: 'teams#index'
+  get '/teams/unavailable', to: 'teams#unavailable'
+  get '/teams/pendent', to: 'teams#pendent'
+  post '/team/invite', to: 'teams#create'
+  put '/team/join/:id', to: 'teams#join'
+  put '/team/leave/:id', to: 'teams#leave'
+  put '/team/restore/:id', to: 'teams#restore'
 end

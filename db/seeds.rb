@@ -21,18 +21,18 @@ team4 = Team.create(name:"Qualquercoisa");
 team5 = Team.create(name:"Mancos Marretas Maricas");
 team6 = Team.create(name:"Vitóra de Tomar");
 
-partn1= Partnership.create(team:team1, user:player1, state:1);
-partn2= Partnership.create(team:team1, user:player2, state:1);
-partn3= Partnership.create(team:team2, user:player1, state:1);
-partn4= Partnership.create(team:team2, user:player3, state:1);
-partn5= Partnership.create(team:team3, user:player1, state:1);
-partn6= Partnership.create(team:team3, user:player4, state:1);
-partn7= Partnership.create(team:team4, user:player2, state:1);
-partn8= Partnership.create(team:team4, user:player3, state:1);
-partn9= Partnership.create(team:team5, user:player2, state:1);
-partn10= Partnership.create(team:team5, user:player4, state:1);
-partn11= Partnership.create(team:team6, user:player4, state:1);
-partn12= Partnership.create(team:team6, user:player3, state:1);
+partn1= Partnership.create(team:team1, user:player1, state:3);
+partn2= Partnership.create(team:team1, user:player2, state:3);
+partn3= Partnership.create(team:team2, user:player1, state:3);
+partn4= Partnership.create(team:team2, user:player3, state:3);
+partn5= Partnership.create(team:team3, user:player1, state:3);
+partn6= Partnership.create(team:team3, user:player4, state:3);
+partn7= Partnership.create(team:team4, user:player2, state:3);
+partn8= Partnership.create(team:team4, user:player3, state:3);
+partn9= Partnership.create(team:team5, user:player2, state:3);
+partn10= Partnership.create(team:team5, user:player4, state:3);
+partn11= Partnership.create(team:team6, user:player4, state:3);
+partn12= Partnership.create(team:team6, user:player3, state:3);
 
 
 game1= Game.create(local:"IPT",match_day:DateTime.new(2018,12,19,17,30),url: "someURL", state:3);
