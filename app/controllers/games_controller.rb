@@ -23,10 +23,18 @@ class GamesController < ApplicationController
 
         #valida as equipas
         game.teams.each do |team|
-            repeted_teams = Team.where(:users=>team.users)
+            
+            users_teams =[];
+            team.users.each do |user|
+                users_teams.push(user.teams)
+            end
+
+            repeted_teams = users_teams.find_all { |e| users_teams.count(e) > 1 }
             if(repeted_teams.length>1)
-                repeted_teams[1..].each do |repeted|
-                    Participation.where(:game=>game, :team=>repeted).first.destroy
+                repeted_teams.drop(1).each do |repeted|
+                    Participation.where(:game=>game, :team=>repeted).delete
+                    Partnership.where(:team=>repeted).delete
+                    Team.find(repeted["id"]).delete
                 end
                 Participation.create(:game=>game, :team=>repeted.first)
             end
@@ -63,12 +71,14 @@ class GamesController < ApplicationController
 
             #remover a posição antiga
             @game.teams.each do |team|
-                team.participations.find_by(:user =>user).destroy
+                if team.partnerships.exists?(:user=>user)
+                    team.partnerships.where(:user=>user).first.delete
+                end
             end
             
             #inserir na nova posição
-            if Partnership.where(team=>Team.find(params[:teamid]).length < 2
-                new_partnership = Partnership.new(user:user, team:Team.find(params[:teamid]))
+            if Partnership.where(:team_id=>params[:teamid]).length < 2
+                new_partnership = Partnership.new(user_id:user["id"], team_id:params[:teamid])
                 if new_partnership.save
                     render json: {message:"OK", status:200}.to_json
                 else
@@ -101,9 +111,7 @@ class GamesController < ApplicationController
         #     c.data["balance"] = "100"
         #     c.data_will_change!
         #     c.save
-        # end
-
-        render json: { message: "OK", status: 200 }.to_json   
+        # end 
         
         #if @game.save
             #render json: { message: "OK", status: 200 }.to_json   
@@ -116,13 +124,13 @@ class GamesController < ApplicationController
     def create
         get_user_by_token(request)
         if @status!=500 && @current_user!=0
-            date = Date.parse(@params[:start_date])
+            date = Date.parse(params[:start_date])
             @game = Game.new(
-                local: @params[:local],
-                is_private = @params[:is_private],
-                url = SecureRandom.urlsafe_base64,
-                match_day = DateTime.new(date.year, date.month, date.mday, @params[:hour], @params[:minutes]),
-                owner = User.find(@current_user)
+                local: params[:local],
+                is_private: params[:is_private],
+                url: SecureRandom.urlsafe_base64,
+                match_day: DateTime.new(date.year, date.month, date.mday, params[:hour], params[:minutes]),
+                owner: User.find(@current_user)
             )
             if @game.save
                 team_1 = Team.new
