@@ -88,7 +88,14 @@ class TeamsController < ApplicationController
                 partner = User.where(:nickname=>params[:partner]).first
 
                 if partner!=nil
-                    if !TeamService.check(partner["id"], @current_user)
+                    flag=false
+                    partnerships=Partnership.where(:user_id=>@current_user);
+                    partnerships.each do |partnership|
+                        if !Partnership.where(:user_id=>partner["id"]).where(:team_id=>partnership["team_id"]).length
+                            flag=true
+                        end
+                    end
+                    if !flag
 
                         team = Team.new(is_official: params[:is_official])
                         if params.has_key?(:name)
@@ -134,8 +141,8 @@ class TeamsController < ApplicationController
                 if relation_1!=nil
                     relation_1["state"]=3;
                     relation_1.save;
-                    relation_2=Partnership.where(:team=>team, :state=>1)
-                    relation_2=3;
+                    relation_2=Partnership.where(:team=>team, :state=>1).first
+                    relation_2["state"]=3;
                     relation_2.save;
 
                     render json:{message:"OK", status:200}.to_json
@@ -162,7 +169,7 @@ class TeamsController < ApplicationController
                     relation_1["state"]=4;
                     relation_1.save;
                     relation_2=Partnership.where(:team=>team, :user=>3).first
-                    relation_2=4;
+                    relation_2["state"]=4;
                     relation_2.save;
 
                     render json:{message:"OK", status:200}.to_json
@@ -189,7 +196,7 @@ class TeamsController < ApplicationController
                     relation_1["state"]=3;
                     relation_1.save;
                     relation_2=Partnership.where(:team=>team, :user=>4).first
-                    relation_2=3;
+                    relation_2["state"]=3;
                     relation_2.save;
 
                     render json:{message:"OK", status:200}.to_json
@@ -208,5 +215,4 @@ class TeamsController < ApplicationController
     def set_default_response_format
       request.format = :json
     end
-
 end
