@@ -8,7 +8,7 @@ class PlayersController < ApplicationController
     end
 
     def getProfile
-        p = get_user_by_token(request)
+        get_user_by_token(request)
         @player = User.find(@current_user)
     end
     
@@ -16,23 +16,31 @@ class PlayersController < ApplicationController
         get_user_by_token(request)
 
         player = User.find(@current_user)
-        @games = []
-        @winner = []
-        @teams = []
-        player.teams.sort_by{|e| e[:id]}.each do |team|
-            g = CasualGame.find_by("team1_id = ? OR team2_id = ?",team["id"],team["id"])
-            @games.push(g)
-            t = []
-            t.push(Team.find(g.team1_id)["name"])
-            t.push(Team.find(g.team2_id)["name"])
-            @teams.push(t)
-            if((g.result1 > g.result2) && g.team1_id==team["id"] || (g.result2 > g.result1) && g.team2_id==team["id"])
-                @winner.push(true)
-            else
-                @winner.push(false)
+        @games=[]
+        player.games.each do |game|
+            is_winner=false
+            teams=[]
+            game.participations.each do |participation|
+                if participation.team.users.exists?(@current_user) && participation["is_winner"]
+                    is_winner=true;
+                end
+                teams.push({
+                    "id":participation.team["id"],
+                    "name":participation.team["name"],
+                    "goals":participation["goals"]
+                });
             end
-
+                @games.push({
+                    "id":game["id"],
+                    "url":game["url"],
+                    "match_day":game["match_day"],
+                    "local":game["local"],
+                    "is_winner":is_winner,
+                    "teams":teams
+                })
         end
+        
+        
     end
 
     def showGameByUser

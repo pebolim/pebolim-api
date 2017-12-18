@@ -45,6 +45,10 @@ class DatabaseReformulation < ActiveRecord::Migration[5.1]
       t.datetime    :match_day 
       t.string      :url
       t.boolean     :is_private, null: false, default:false
+      t.boolean     :is_locked, null: false, default:false
+      t.datetime    :start_date
+      t.datetime    :finish_date
+      t.references  :owner, references: :user, index: true
 
       t.timestamps
     end
