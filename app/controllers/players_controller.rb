@@ -14,35 +14,41 @@ class PlayersController < ApplicationController
     
     def showGamesByUser
         get_user_by_token(request)
+        if @status!=500 && @current_user!=0
 
-        player = User.find(@current_user)
-        @games=[]
-        player.games.each do |game|
-            is_winner=false
-            teams=[]
-            game.participations.each do |participation|
-                if participation.team.users.exists?(@current_user) && participation["is_winner"]
-                    is_winner=true;
+            player = User.find(@current_user)
+            @games=[]
+            player.games.each do |game|
+                is_winner=false
+                teams=[]
+                game.participations.each do |participation|
+                    if participation.team.users.exists?(@current_user) && participation["is_winner"]
+                        is_winner=true;
+                    end
+                    teams.push({
+                        "id":participation.team["id"],
+                        "name":participation.team["name"],
+                        "goals":participation["goals"]
+                    });
                 end
-                teams.push({
-                    "id":participation.team["id"],
-                    "name":participation.team["name"],
-                    "goals":participation["goals"]
-                });
+                    @games.push({
+                        "id":game["id"],
+                        "url":game["url"],
+                        "match_day":game["match_day"],
+                        "local":game["local"],
+                        "is_winner":is_winner,
+                        "teams":teams
+                    })
             end
-                @games.push({
-                    "id":game["id"],
-                    "url":game["url"],
-                    "match_day":game["match_day"],
-                    "local":game["local"],
-                    "is_winner":is_winner,
-                    "teams":teams
-                })
+            @message="OK"
+            @status=200
+        else
+            @message="Unauthorized"
+            @status=500
         end
         
-        
     end
-
+=begin
     def showGameByUser
         @game = CasualGame.find(get_game_id)
         @owner = User.find(@game.owner_id)["nickname"]
@@ -63,18 +69,16 @@ class PlayersController < ApplicationController
             
         end
     end
+=end
 
     protected
     def set_default_response_format
       request.format = :json
     end
-
+=begin
     private
-    def get_user_id
-        params[:userid]
-    end
-
     def get_game_id
         params[:gameid]
     end
+=end
 end

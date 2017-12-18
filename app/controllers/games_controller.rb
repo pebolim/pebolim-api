@@ -13,7 +13,6 @@ class GamesController < ApplicationController
         @participations = @game.participations      
     end
 
-
     #TODO: verificar parametros e validar o user
     def startGame     
         game = Game.find_by(:url => params[:id])   
@@ -65,7 +64,7 @@ class GamesController < ApplicationController
             #remover a posição antiga
             @game.teams.each do |team|
                 team.participations.find_by(:user =>user).destroy
-            end     
+            end
             
             #inserir na nova posição
             if Partnership.where(team=>Team.find(params[:teamid]).length < 2
@@ -81,7 +80,7 @@ class GamesController < ApplicationController
         else
             render json: {message:"Unauthorized", status:500}.to_json
         end
-  
+        
         # @game.teams.where(:defender => params[:user_id]).update_all(defender: 0)
 
         # @game.teams.update_all(:name => "x")
