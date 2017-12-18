@@ -38,6 +38,8 @@ ToDo
     -vagrant up
     -vagrant ssh
     -cd ../../vagrant
+    -bundle install
+    -rails db:setup
     -rails db:migrate
     -rails server
     -Open browser with the url generated.
