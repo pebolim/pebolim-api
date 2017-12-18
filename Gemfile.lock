@@ -70,7 +70,7 @@ GEM
     nio4r (2.1.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
-    openssl (2.0.6)
+    openssl (2.1.0)
     puma (3.11.0)
     rack (2.0.3)
     rack-cors (1.0.2)
