@@ -1,3 +1,5 @@
+[![Dependency Status](https://beta.gemnasium.com/badges/github.com/pebolim/pebolim-api.svg)](https://beta.gemnasium.com/projects/github.com/pebolim/pebolim-api)
+
 # pebolim-api
 
 Ruby on Rails &amp; React - Software Engineering Project
