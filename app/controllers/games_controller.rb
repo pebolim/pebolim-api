@@ -10,7 +10,8 @@ class GamesController < ApplicationController
 
     def gameDetails
         @game = Game.find_by(:url => params[:id])       
-        @participations = @game.participations      
+        @participations = @game.participations    
+        @status=200  
     end
 
     #TODO: verificar parametros e validar o user
@@ -56,7 +57,7 @@ class GamesController < ApplicationController
             result.push({
                 "id":team["id"],
                 "name":team["name"],
-                "players":team.users.select(:id, :name).take
+                "players":team.users.select(:id, :nickname)
             })
         end 
 
@@ -124,13 +125,15 @@ class GamesController < ApplicationController
     def create
         get_user_by_token(request)
         if @status!=500 && @current_user!=0
-            date = Date.parse(params[:start_date])
+            @params = game_params
+            date = Date.parse(@params[:start_date])
             @game = Game.new(
-                local: params[:local],
-                is_private: params[:is_private],
+                local: @params[:local],
+                is_private: @params[:is_private],
                 url: SecureRandom.urlsafe_base64,
-                match_day: DateTime.new(date.year, date.month, date.mday, params[:hour], params[:minutes]),
-                owner: User.find(@current_user)
+                match_day: DateTime.new(date.year, date.month, date.mday, @params[:hour], @params[:minutes]),
+                owner: User.find(@current_user),
+                is_locked: false
             )
             if @game.save
                 team_1 = Team.new
@@ -138,7 +141,7 @@ class GamesController < ApplicationController
                 if team_1.save && team_2.save
                     participation_1=Participation.create(game:@game, team:team_1)
                     participation_2=Participation.create(game:@game, team:team_2)
-                    render json: { message: "OK", status: 200, url_id: @game.url }.to_json 
+                    render json: { message: "OK", status: 201, url_id: @game.url }.to_json 
                 else
                     render json: { message: "The game cannot be initialized", status: 500 }.to_json
                 end  
@@ -165,7 +168,4 @@ class GamesController < ApplicationController
         params.require(:game).permit(:local,:is_private,:hour,:minutes,:start_date)
     end
 
-    def game_params
-        params.permit(:local,:is_private,:hour,:minutes,:start_date)
-    end
 end
