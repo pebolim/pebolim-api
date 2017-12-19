@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   #_____________Games_____________
   put '/game/:id/start', to: 'games#startGame'
   put '/game/:id/finish', to: 'games#finishGame'
-  put '/game/:id/join/:teamid', to: 'games#joinGame'
+  put '/game/:id/join', to: 'games#joinGame'
   put '/game/:id/remove', to: 'games#removePlayer'
   get '/game/:id/players', to: 'games#getPlayers'
   get '/game/:id', to: 'games#gameDetails'
@@ -14,9 +14,10 @@ Rails.application.routes.draw do
 
   #_____________Players_____________
   get '/players', to: 'players#index'
-  get '/player/games', to: 'players#showGamesByUser'
+  get '/player/games/:pageid', to: 'players#showGamesByUser'
   get '/player/game/:gameid', to: 'players#showGameByUser'
   get '/player', to: 'players#getProfile'
+  get '/player/nPages', to: 'players#getPagesofGamesByUser'
 
   #----teams----
   get '/teams', to: 'teams#index'
