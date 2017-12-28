@@ -1,3 +1,4 @@
+[![Dependency Status](https://beta.gemnasium.com/badges/github.com/pebolim/pebolim-api.svg)](https://beta.gemnasium.com/projects/github.com/pebolim/pebolim-api)
 # pebolim-api
 
 Ruby on Rails &amp; React - Software Engineering Project
@@ -38,6 +39,7 @@ ToDo
     -vagrant up
     -vagrant ssh
     -cd ../../vagrant
+    -rails db:setup
     -rails db:migrate
     -rails server
     -Open browser with the url generated.
