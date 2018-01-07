@@ -11,15 +11,15 @@
 
 player1 = User.create(email:"yepz@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"yEPZ",age: 23,image_url: "http://blog.opovo.com.br/portugalsempassaporte/wp-content/uploads/sites/42/2013/07/Scolari.jpg");
 player2 = User.create(email:"sexyboy@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"sexyboy",age: 31);
-player3 = User.create(email:"teste@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"teste",age: 99);
+player3 = User.create(email:"teste@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"teste",age: 99,image_url: "http://c2.thejournal.ie/media/2015/09/monkey-selfie-1-310x415.jpg");
 player4 = User.create(email:"rafescu@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"rafescu",age: 12);
 
-team1 = Team.create(name:"Reis dos matrecos");
-team2 = Team.create(name:"Abébias Clube de Portugal");
-team3 = Team.create(name:"Roscas e Pregos");
-team4 = Team.create(name:"Qualquercoisa");
-team5 = Team.create(name:"Mancos Marretas Maricas");
-team6 = Team.create(name:"Vitóra de Tomar");
+team1 = Team.create(name:"Reis dos matrecos", is_official:true);
+team2 = Team.create(name:"Abébias Clube de Portugal", is_official:true);
+team3 = Team.create(name:"Roscas e Pregos", is_official:true);
+team4 = Team.create(name:"Qualquercoisa", is_official:true);
+team5 = Team.create(name:"Mancos Marretas Maricas", is_official:true);
+team6 = Team.create(name:"Vitóra de Tomar", is_official:true);
 
 partn1= Partnership.create(team:team1, user:player1, state:3);
 partn2= Partnership.create(team:team1, user:player2, state:3);
