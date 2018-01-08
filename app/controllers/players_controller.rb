@@ -2,6 +2,12 @@ class PlayersController < ApplicationController
 
     before_action :set_default_response_format
     
+    respond_to? :json
+    swagger_controller :players, "Players Controller"
+    swagger_api :index do
+        summary "List all players"
+        notes "Implementation notes, such as required params, example queries for apis are written here."
+    end
 
     def index
         @players = User.all

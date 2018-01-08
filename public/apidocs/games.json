@@ -5,7 +5,7 @@
   "resourcePath": "games",
   "apis": [
     {
-      "path": "/game",
+      "path": "/game.json",
       "operations": [
         {
           "summary": "Create a game",

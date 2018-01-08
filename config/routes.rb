@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   post '/login', to: 'authentication#login'
   post '/signin', to: 'authentication#signin'
 

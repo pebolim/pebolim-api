@@ -7,8 +7,13 @@ class GamesController < ApplicationController
     # def index
     #     @games = Game.all
     # end
-
-
+    respond_to? :json
+    swagger_controller :games, "Games Controller"
+    swagger_api :create do
+        summary "Create a game"
+        notes "Implementation notes, such as required params, example queries for apis are written here."
+        param :form, "game[local]", :string, :required, "Game Local"
+    end
 
     def gameDetails
         @game = Game.find_by(:url => params[:id])       
@@ -122,13 +127,8 @@ class GamesController < ApplicationController
         #     render json: { message: "Not OK", status: 500 }.to_json
         # end
     end
-    swagger_controller :games, "Games Management"
 
-    swagger_api :create do
-        summary "Create a game"
-        notes "Implementation notes, such as required params, example queries for apis are written here."
-        param :form, "game[local]", :string, :required, "Game Local"
-    end
+ 
 
     #post
     def create

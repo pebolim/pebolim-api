@@ -1,6 +1,13 @@
 class TeamsController < ApplicationController
     before_action :set_default_response_format
     
+    respond_to? :json
+    swagger_controller :teams, "Teams Controller"
+    swagger_api :create do
+        summary "Create a team"
+        notes "Implementation notes, such as required params, example queries for apis are written here."
+    end
+
     #get
     def index
         get_user_by_token(request)
