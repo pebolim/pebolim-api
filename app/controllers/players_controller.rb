@@ -11,14 +11,23 @@ class PlayersController < ApplicationController
         get_user_by_token(request)
         @player = User.find(@current_user)
     end
+
+    def getPagesofGamesByUser
+        get_user_by_token(request)
+        player = User.find(@current_user)
+        @nPages = (Float(player.games.length)/5).ceil
+    end
     
     def showGamesByUser
         get_user_by_token(request)
+
+        page = Integer(params[:pageid])-1
         if @status!=500 && @current_user!=0
 
             player = User.find(@current_user)
             @games=[]
-            player.games.each do |game|
+            g = player.games.sort_by{|e| e[:id]}
+            g[page*5..page*5+4].each do |game|
                 is_winner=false
                 teams=[]
                 game.participations.each do |participation|
@@ -75,10 +84,5 @@ class PlayersController < ApplicationController
     def set_default_response_format
       request.format = :json
     end
-=begin
-    private
-    def get_game_id
-        params[:gameid]
-    end
-=end
+
 end
