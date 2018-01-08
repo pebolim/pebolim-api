@@ -95,6 +95,32 @@ class GamesController < ApplicationController
         end
     end
 
+    def publicGames
+        get_user_by_token(request)
+        if @status!=500 && @current_user!=0
+
+            player = User.find(@current_user)
+            g=Game.where(:is_private=>false).where(:state=>1)
+            games=[]
+            
+            g.each do |game|
+                count=0
+                game.teams.each do |team|
+                    count = count + team.users.length
+                end 
+                games.push({
+                    "url":game["url"],
+                    "match_day":game["match_day"],
+                    "local":game["local"],
+                    "numPlayers":count
+                })
+            end
+            render json: {games:games, status:200, message:"OK"}.to_json
+        else
+            render json: {message:"Unauthorized", status:500}.to_json
+        end
+    end
+
     def leaveUserFromGame
         get_user_by_token(request)
         if @status!=500 && @current_user!=0

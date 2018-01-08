@@ -35,7 +35,7 @@ partn11= Partnership.create(team:team6, user:player4, state:3);
 partn12= Partnership.create(team:team6, user:player3, state:3);
 
 
-game1= Game.create(local:"IPT",match_day:DateTime.new(2018,12,19,17,30),url: "someURL", state:3, owner:player1);
+game1= Game.create(local:"IPT",match_day:DateTime.new(2018,12,19,17,30),url: "someURL", state:1, owner:player1, is_private:false);
 game2= Game.create(local:"IPT",match_day:DateTime.new(2018,10,19,17,30),url: "someURL", state:3, owner:player2);
 game3= Game.create(local:"IPT",match_day:DateTime.new(2018,11,19,17,30),url: "someURL", state:3, owner:player3);
 game4= Game.create(local:"IPT",match_day:DateTime.new(2018,12,19,18,30),url: "someURL", state:3, owner:player4);
