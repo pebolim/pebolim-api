@@ -190,8 +190,4 @@ class GamesController < ApplicationController
         params[:id]
     end
 
-    def game_params
-        params.require(:game).permit(:local,:is_private,:hour,:minutes,:start_date,:to_teams)
-    end
-
 end
