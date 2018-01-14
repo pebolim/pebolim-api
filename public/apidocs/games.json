@@ -9,13 +9,47 @@
       "operations": [
         {
           "summary": "Create a game",
-          "notes": "Implementation notes, such as required params, example queries for apis are written here.",
           "parameters": [
             {
-              "paramType": "form",
+              "paramType": "local",
               "name": "game[local]",
               "type": "string",
-              "description": "Game Local",
+              "description": "Local for Game",
+              "required": true
+            },
+            {
+              "paramType": "is_private",
+              "name": "game[is_private]",
+              "type": "boolean",
+              "description": "Game Mode",
+              "required": true
+            },
+            {
+              "paramType": "url",
+              "name": "game[url]",
+              "type": "string",
+              "description": "URL for Game",
+              "required": true
+            },
+            {
+              "paramType": "match_day",
+              "name": "game[match_day]",
+              "type": "string",
+              "description": "Match Day of Game",
+              "required": true
+            },
+            {
+              "paramType": "owner",
+              "name": "game[owner]",
+              "type": "string",
+              "description": "Owner of Game",
+              "required": true
+            },
+            {
+              "paramType": "is_locked",
+              "name": "game[is_locked]",
+              "type": "boolean",
+              "description": "Game State",
               "required": true
             }
           ],

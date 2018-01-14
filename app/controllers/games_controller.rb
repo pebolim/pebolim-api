@@ -11,8 +11,12 @@ class GamesController < ApplicationController
     swagger_controller :games, "Games Controller"
     swagger_api :create do
         summary "Create a game"
-        notes "Implementation notes, such as required params, example queries for apis are written here."
-        param :form, "game[local]", :string, :required, "Game Local"
+        param :local, "game[local]", :string, :required, "Local for Game"
+        param :is_private, "game[is_private]", :boolean, :required, "Game Mode"
+        param :url, "game[url]", :string, :required, "URL for Game"
+        param :match_day, "game[match_day]", :string, :required, "Match Day of Game"
+        param :owner, "game[owner]", :string, :required, "Owner of Game"
+        param :is_locked, "game[is_locked]", :boolean, :required, "Game State"
     end
 
     def gameDetails
