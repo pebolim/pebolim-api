@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   put '/game/:id/remove', to: 'games#removePlayer'
   get '/game/:id/players', to: 'games#getPlayers'
   get '/game/:id/details', to: 'games#gameDetails'
+  get '/game/:id/goals', to: 'games#getGoals'
   get '/game/index', to: 'games#index', as: 'casual_games'
   get '/game/public', to: 'games#publicGames'
   post '/game', to: 'games#create'
