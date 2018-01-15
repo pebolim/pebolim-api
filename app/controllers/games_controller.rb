@@ -10,7 +10,7 @@ class GamesController < ApplicationController
 
     def gameDetails
         if @game = Game.find_by(:url => params[:id])  
-            @participations = @game.participations    
+            @participations = @game.participations
             @status=200  
         else
             render json: {message:"Game not found", status:500}.to_json
@@ -20,18 +20,33 @@ class GamesController < ApplicationController
     #TODO: verificar parametros e validar o user
     def startGame     
         game = Game.find_by(:url => params[:id])   
-        if game.users.count == 4
-            game.state = 2
-            game.start_date = DateTime.now
-            game.is_locked = true
 
-            if game.save
-                render json: { message: "OK", status: 200 }.to_json   
-            else
-                render json: { message: "Is not possible to start the game, try again later", status: 500 }.to_json
+        game.state = 2
+        game.start_date = DateTime.now
+
+        #valida as equipas
+        game.teams.each do |team|
+            
+            users_teams =[];
+            team.users.each do |user|
+                users_teams.push(user.teams)
             end
+
+            repeted_teams = users_teams.find_all { |e| users_teams.count(e) > 1 }
+            if(repeted_teams.length>1)
+                repeted_teams.drop(1).each do |repeted|
+                    Participation.where(:game=>game, :team=>repeted).delete
+                    Partnership.where(:team=>repeted).delete
+                    Team.find(repeted["id"]).delete
+                end
+                Participation.create(:game=>game, :team=>repeted.first)
+            end
+        end
+
+        if game.save
+            render json: { message: "OK", status: 200 }.to_json   
         else
-            render json: { message: "Unsufficient players to start the game", status: 500 }.to_json 
+            render json: { message: "Not OK", status: 500 }.to_json
         end
     end
 
@@ -90,6 +105,50 @@ class GamesController < ApplicationController
             else
                 render json: {message:"The game is full", status:500}.to_json            
             end
+        else
+            render json: {message:"Unauthorized", status:500}.to_json
+        end
+    end
+
+    def finishGame    
+        get_user_by_token(request)
+        if @status!=500 && @current_user!=0
+            game = Game.find_by(:url => params[:id])
+
+            user=User.find(@current_user)  
+            game.state = 3
+            game.finish_date = DateTime.now
+
+
+            if game.owner.id == @current_user
+
+                if game.save
+                    render json: { message: "OK", status: 200, finish_date: game.finish_date }.to_json 
+                end
+            else          
+                render json: { message: "Not OK", status: 500 }.to_json
+            end
+        else
+            render json: {message:"Unauthorized", status:500}.to_json
+        end
+    end
+
+
+    def getPlayers
+        get_user_by_token(request)
+        if @status!=500 && @current_user!=0
+            game = Game.find_by(:url => params[:id])
+            teams = game.teams
+
+            result = [];
+            teams.each do |team| 
+                result.push({
+                    "id":team["id"],
+                    "name":team["name"],
+                    "players":team.users.select(:id, :nickname, :image_url)
+                })
+            end 
+            render json: { message: "OK", status: 200, teams: result }.to_json
         else
             render json: {message:"Unauthorized", status:500}.to_json
         end
@@ -171,10 +230,10 @@ class GamesController < ApplicationController
                     match_day: DateTime.new(date.year, date.month, date.mday, params[:hour], params[:minutes]),
                     owner: User.find(@current_user)
                 )
-                if params.has_key?(:is_private) && params[:is_private]!=""
+                if params.has_key?(:is_private) && params[:is_private]!="" && params[:is_private]!=nil
                     game.is_private= params[:is_private];
                 end
-                if params.has_key?(:to_teams) && params[:to_teams]!="" && params[:to_teams]
+                if params.has_key?(:to_teams) && params[:to_teams]!="" && params[:to_teams]!=nil
                     game.to_teams= params[:to_teams];
                     if game.save
                         render json: { message: "OK", status: 201, url_id: game.url }.to_json 
@@ -222,6 +281,27 @@ class GamesController < ApplicationController
                     "player_id":goal.user.id,
                     "team_id":team_id
                 })
+            end
+        else
+            render json: {message:"Unauthorized", status:500}.to_json
+        end
+    end
+
+    def insertGoal
+        get_user_by_token(request)
+        if @status!=500 && @current_user!=0
+            @game = Game.find_by(:url => params[:id])
+
+            scorer = User.find(params[:user])
+            puts @game.owner.inspect
+            if scorer != nil && @game.owner.id == @current_user
+                @goal = Goal.new(time: params[:time], game: @game, user: scorer)
+
+                if @goal.save
+                    render json: { message: "OK", status: 201 }.to_json 
+                end
+            else
+                render json: { message: "NOK", status: 500 }.to_json
             end
         else
             render json: {message:"Unauthorized", status:500}.to_json
