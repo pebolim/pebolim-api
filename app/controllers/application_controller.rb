@@ -13,8 +13,7 @@ class ApplicationController < ActionController::API
             @current_user = payload[0]["user_id"];
             @status=200
         else
-            @message="Unauthorized"
-            @status=500
+            render json: {message:"Unauthorized", status:401}.to_json
         end
     end
 

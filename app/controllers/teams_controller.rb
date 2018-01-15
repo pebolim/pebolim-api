@@ -31,7 +31,7 @@ class TeamsController < ApplicationController
     #get
     def pendent
         get_user_by_token(request)
-        if @status!=500 && @current_user!=0
+        if  @current_user!=0
             player = User.find(@current_user)
             @teams=[];
             pendent_partnerships=player.partnerships.where(:state=>2)
