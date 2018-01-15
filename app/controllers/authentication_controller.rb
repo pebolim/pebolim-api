@@ -60,7 +60,7 @@ class AuthenticationController < ApplicationController
         payload = {
           :user_id => @user["id"],
           :ip_address => request.remote_ip,
-          :expiration_date => DateTime.now + 3.hours
+          :expiration_date => DateTime.now + 8.hours
         }
     
         @token = JWT.encode payload, rsa_private, 'RS256'

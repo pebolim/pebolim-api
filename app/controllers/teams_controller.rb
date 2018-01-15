@@ -10,18 +10,19 @@ class TeamsController < ApplicationController
             available_partnerships=player.partnerships.where(:state=>3)
             available_partnerships.each do |partnership|
                 team=Team.find(partnership.team_id)
-                partner=team.users.where.not(:id=>@current_user).first
-                @teams.push({
-                    "id": team["id"],
-                    "is_official": team["is_official"],
-                    "name": team["is_official"]? team["name"]: nil,
-                    "image_url": team["is_official"] ? team["image_url"] : nil,
-                    "partner":{
-                        "id":partner["id"],
-                        "nickname":partner["nickname"],
-                        "image_url":partner["image_url"]
-                    }
-                })
+                if team.is_official
+                    partner=team.users.where.not(:id=>@current_user).first
+                    @teams.push({
+                        "id": team["id"],
+                        "name": team["name"],
+                        "image_url": team["image_url"],
+                        "partner":{
+                            "id":partner["id"],
+                            "nickname":partner["nickname"],
+                            "image_url":partner["image_url"]
+                        }
+                    })
+                end
                 @status=200;
             end
         end
@@ -36,18 +37,19 @@ class TeamsController < ApplicationController
             pendent_partnerships=player.partnerships.where(:state=>2)
             pendent_partnerships.each do |partnership|
                 team=Team.find(partnership.team_id)
-                partner=team.users.where.not(:id=>@current_user).first
-                @teams.push({
-                    "id": team["id"],
-                    "is_official": team["is_official"],
-                    "name": team["is_official"]? team["name"]: nil,
-                    "image_url": team["is_official"] ? team["image_url"] : nil,
-                    "partner":{
-                        "id":partner["id"],
-                        "nickname":partner["nickname"],
-                        "image_url":partner["image_url"]
-                    }
-                })
+                if team.is_official
+                    partner=team.users.where.not(:id=>@current_user).first
+                    @teams.push({
+                        "id": team["id"],
+                        "name": team["name"],
+                        "image_url": team["image_url"],
+                        "partner":{
+                            "id":partner["id"],
+                            "nickname":partner["nickname"],
+                            "image_url":partner["image_url"]
+                        }
+                    })
+                end
                 @status=200;
             end
         end
@@ -62,18 +64,19 @@ class TeamsController < ApplicationController
             unavailable_partnerships=player.partnerships.where(:state=>1)+player.partnerships.where(:state=>4)
             unavailable_partnerships.each do |partnership|
                 team=Team.find(partnership.team_id)
-                partner=team.users.where.not(:id=>@current_user).first
-                @teams.push({
-                    "id": team["id"],
-                    "is_official": team["is_official"],
-                    "name": team["is_official"]? team["name"]: nil,
-                    "image_url": team["is_official"] ? team["image_url"] : nil,
-                    "partner":{
-                        "id":partner["id"],
-                        "nickname":partner["nickname"],
-                        "image_url":partner["image_url"]
-                    }
-                })
+                if team.is_official
+                    partner=team.users.where.not(:id=>@current_user).first
+                    @teams.push({
+                        "id": team["id"],
+                        "name": team["name"],
+                        "image_url": team["image_url"],
+                        "partner":{
+                            "id":partner["id"],
+                            "nickname":partner["nickname"],
+                            "image_url":partner["image_url"]
+                        }
+                    })
+                end
                 @status=200;
             end
         end
@@ -88,36 +91,24 @@ class TeamsController < ApplicationController
                 partner = User.where(:nickname=>params[:partner]).first
 
                 if partner!=nil
-                    flag=false
-                    partnerships=Partnership.where(:user_id=>@current_user);
-                    partnerships.each do |partnership|
-                        if !Partnership.where(:user_id=>partner["id"]).where(:team_id=>partnership["team_id"]).length
-                            flag=true
-                        end
+                    team = Team.new(is_official: true)
+                    if params.has_key?(:name)
+                        team["name"]=params[:name]
                     end
-                    if !flag
-
-                        team = Team.new(is_official: params[:is_official])
-                        if params.has_key?(:name)
-                            team["name"]=params[:name]
-                        end
-                        if params.has_key?(:image_url)
-                            team["image_url"]=params[:image_url]
-                        end
-                        
-                        if team.save
-                            partnership_1 = Partnership.create(team:team, user:User.find(@current_user), state:1)
-                            partnership_2 = Partnership.create(team:team, user:partner, state:2)
-                            if partnership_1 && partnership_2
-                                render json: {message:"OK", status:200}.to_json
-                            else
-                                render json: {message:"Relationship could not be created", status:500}.to_json
-                            end
+                    if params.has_key?(:image_url)
+                        team["image_url"]=params[:image_url]
+                    end
+                    
+                    if team.save
+                        partnership_1 = Partnership.create(team:team, user:User.find(@current_user), state:1)
+                        partnership_2 = Partnership.create(team:team, user:partner, state:2)
+                        if partnership_1 && partnership_2
+                            render json: {message:"OK", status:200}.to_json
                         else
-                            render json: {message:"Team could not be created", status:500}.to_json
+                            render json: {message:"Relationship could not be created", status:500}.to_json
                         end
                     else
-                        render json: {message:"Team already exists", status:500}.to_json
+                        render json: {message:"Team could not be created", status:500}.to_json
                     end
                 else
                     render json: {message:"User to create team not found", status:500}.to_json

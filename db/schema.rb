@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171218185750) do
+ActiveRecord::Schema.define(version: 20180106205416) do
 
   create_table "encounters", force: :cascade do |t|
     t.integer "game_id"
@@ -26,12 +26,13 @@ ActiveRecord::Schema.define(version: 20171218185750) do
     t.datetime "match_day"
     t.string "url"
     t.boolean "is_private", default: false, null: false
+    t.datetime "start_date"
+    t.datetime "finish_date"
+    t.integer "owner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_locked"
-    t.datetime "start_date"
-    t.integer "owner_id"
-    t.datetime "finish_date"
+    t.boolean "to_teams", default: false, null: false
+    t.index ["owner_id"], name: "index_games_on_owner_id"
   end
 
   create_table "goals", force: :cascade do |t|

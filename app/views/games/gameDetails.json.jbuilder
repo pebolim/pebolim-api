@@ -6,7 +6,8 @@ json.set! :game do
     json.url @game.url
     json.is_private @game.is_private
     json.local @game.local
-    json.owner @game.owner.id
+    json.owner_id @game.owner.id
+    json.owner_name @game.owner.nickname
     json.state @game.state
     json.start_date @game.start_date
     json.finish_date @game.finish_date
@@ -24,6 +25,7 @@ json.set! :game do
             json.id participation.team.id
             json.name participation.team.name
             json.is_winner participation.is_winner
+
         end
     end
 end
