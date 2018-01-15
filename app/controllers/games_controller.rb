@@ -10,7 +10,7 @@ class GamesController < ApplicationController
 
     def gameDetails
         if @game = Game.find_by(:url => params[:id])  
-            @participations = @game.participations    
+            @participations = @game.participations
             @status=200  
         else
             render json: {message:"Game not found", status:500}.to_json
@@ -230,17 +230,30 @@ class GamesController < ApplicationController
                     match_day: DateTime.new(date.year, date.month, date.mday, params[:hour], params[:minutes]),
                     owner: User.find(@current_user)
                 )
-                if params.has_key?(:is_private) && params[:is_private]!=""
+                if params.has_key?(:is_private) && params[:is_private]!="" && params[:is_private]!=nil
                     game.is_private= params[:is_private];
                 end
-                if params.has_key?(:to_teams) && params[:to_teams]!="" && params[:to_teams]
+                if params.has_key?(:to_teams) && params[:to_teams]!="" && params[:to_teams]!=nil
                     game.to_teams= params[:to_teams];
                     if game.save
                         render json: { message: "OK", status: 201, url_id: game.url }.to_json 
                     else
                         render json: { message: "Cannot create a new game", status: 500 }.to_json
-                    end            
-                    
+                    end
+                else
+                    if game.save
+                        team_1 = Team.new
+                        team_2 = Team.new
+                        if team_1.save && team_2.save
+                            participation_1=Participation.create(game:game, team:team_1)
+                            participation_2=Participation.create(game:game, team:team_2)
+                            render json: { message: "OK", status: 201, url_id: game.url }.to_json 
+                        else
+                            render json: { message: "The game cannot be initialized", status: 500 }.to_json
+                        end  
+                    else
+                        render json: { message: "Cannot create a new game", status: 500 }.to_json
+                    end
                 end
             else
                 render json: {message:"You need to fill all fields", status:500}.to_json

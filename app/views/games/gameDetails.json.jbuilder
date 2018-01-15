@@ -25,7 +25,14 @@ json.set! :game do
             json.id participation.team.id
             json.name participation.team.name
             json.is_winner participation.is_winner
-
+            
+            json.set! :players do
+                json.array! participation.team.users.each do |user|
+                    json.id user.id
+                    json.nickname user.nickname
+                    json.image_url user.image_url
+                end
+            end
         end
     end
 end
