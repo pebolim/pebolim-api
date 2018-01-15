@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post '/signin', to: 'authentication#signin'
 
   #_____________Games_____________
+  post '/game/:id/goal', to: 'games#insertGoal'
   put '/game/:id/start', to: 'games#startGame'
   put '/game/:id/finish', to: 'games#finishGame'
   put '/game/:id/join', to: 'games#joinGame'
