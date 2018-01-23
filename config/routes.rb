@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post '/signin', to: 'authentication#signin'
 
   #_____________Games_____________
+  post '/game/:id/goal', to: 'games#insertGoal'
   put '/game/:id/start', to: 'games#startGame'
   put '/game/:id/finish', to: 'games#finishGame'
   put '/game/:id/joinuser', to: 'games#joinUserToGame'
@@ -12,6 +13,7 @@ Rails.application.routes.draw do
   put '/game/:id/remove', to: 'games#removePlayer'
   get '/game/:id/players', to: 'games#getPlayers'
   get '/game/:id/details', to: 'games#gameDetails'
+  get '/game/:id/goals', to: 'games#getGoals'
   get '/game/index', to: 'games#index', as: 'casual_games'
   get '/game/public', to: 'games#publicGames'
   post '/game', to: 'games#create'
