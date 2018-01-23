@@ -10,16 +10,16 @@
 #Para recriar a db rails db:setup
 
 player1 = User.create(email:"yepz@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"yEPZ",age: 23,image_url: "http://blog.opovo.com.br/portugalsempassaporte/wp-content/uploads/sites/42/2013/07/Scolari.jpg");
-player2 = User.create(email:"sexyboy@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"sexyboy",age: 31);
+player2 = User.create(email:"sexyboy@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"sexyboy",age: 31, image_url:"http://cdn.sabado.pt/images/2016-12/img_797x448$2016_12_29_15_40_46_200512.jpg");
 player3 = User.create(email:"teste@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"teste",age: 99,image_url: "http://c2.thejournal.ie/media/2015/09/monkey-selfie-1-310x415.jpg");
-player4 = User.create(email:"rafescu@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"rafescu",age: 12);
+player4 = User.create(email:"rafescu@a.a",password:"fbfb386efea67e816f2dda0a8c94a98eb203757aebb3f55f183755a192d44467", nickname:"rafescu",age: 12, image_url:"http://cdn.vidas.pt/images/2011-04/img_650x412$2011_04_17_18_09_00_49374.jpg");
 
-team1 = Team.create(name:"Reis dos matrecos", is_official:true);
-team2 = Team.create(name:"Abébias Clube de Portugal", is_official:true);
-team3 = Team.create(name:"Roscas e Pregos", is_official:true);
-team4 = Team.create(name:"Qualquercoisa", is_official:true);
-team5 = Team.create(name:"Mancos Marretas Maricas", is_official:true);
-team6 = Team.create(name:"Vitóra de Tomar", is_official:true);
+team1 = Team.create(name:"Reis dos matrecos", is_official:true, image_url:"https://cdn-images.rtp.pt/EPG/imagens/13007_34251_71693.jpg?q=30&v=3&w=350&w=150");
+team2 = Team.create(name:"Abébias Clube de Portugal", is_official:true, image_url:"https://vignette.wikia.nocookie.net/winx/images/4/4f/Winx_Club_Logo.png/revision/latest?cb=20151229222858&path-prefix=pt-br");
+team3 = Team.create(name:"Roscas e Pregos", is_official:true, image_url:"https://www.atelevisao.com/wp-content/uploads/2013/02/default.jpg");
+team4 = Team.create(name:"Qualquercoisa", is_official:true, image_url:"https://media-cdn.tripadvisor.com/media/photo-s/0a/a5/c8/b8/puerto-vallarta-gay-pride.jpg");
+team5 = Team.create(name:"Mancos Marretas Maricas", is_official:true, image_url:"https://orig00.deviantart.net/d23f/f/2007/141/9/2/chuck_norris_t_shirt_by_gels31.jpg");
+team6 = Team.create(name:"Vitóra de Tomar", is_official:true, image_url:"https://patchesofpride.files.wordpress.com/2015/03/actionmanlogo.png");
 
 partn1= Partnership.create(team:team1, user:player1, state:3);
 partn2= Partnership.create(team:team1, user:player2, state:3);

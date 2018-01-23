@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::API
 
+def index
+    render :file => 'public/index.html'
+end
+
     helper_method :get_user_by_token
 
     def get_user_by_token(request)

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  
+  get '/', to: 'application#index'
+  
   post '/login', to: 'authentication#login'
   post '/signin', to: 'authentication#signin'
 
