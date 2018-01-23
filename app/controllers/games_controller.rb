@@ -295,9 +295,11 @@ class GamesController < ApplicationController
             scorer = User.find(params[:user])
             puts @game.owner.inspect
             if scorer != nil && @game.owner.id == @current_user
+                
                 @goal = Goal.new(time: params[:time], game: @game, user: scorer)
-
-                if @goal.save
+                part=@game.participations[params[:team]]
+                part.goals=part.goals+1;
+                if @goal.save && part.save
                     render json: { message: "OK", status: 201 }.to_json 
                 end
             else

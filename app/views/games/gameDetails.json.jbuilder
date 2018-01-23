@@ -12,6 +12,7 @@ json.set! :game do
     json.start_date @game.start_date
     json.finish_date @game.finish_date
     json.match_day @game.match_day
+    json.to_teams @game.to_teams
 
     json.set! :goals do
         json.array! @game.goals.each do |goal|
