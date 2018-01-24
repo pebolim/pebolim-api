@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20180106205416) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "encounters", force: :cascade do |t|
-    t.integer "game_id"
-    t.integer "match_id"
+    t.bigint "game_id"
+    t.bigint "match_id"
     t.index ["game_id"], name: "index_encounters_on_game_id"
     t.index ["match_id"], name: "index_encounters_on_match_id"
   end
@@ -28,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180106205416) do
     t.boolean "is_private", default: false, null: false
     t.datetime "start_date"
     t.datetime "finish_date"
-    t.integer "owner_id"
+    t.bigint "owner_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "to_teams", default: false, null: false
@@ -36,15 +39,15 @@ ActiveRecord::Schema.define(version: 20180106205416) do
   end
 
   create_table "goals", force: :cascade do |t|
-    t.integer "game_id"
-    t.integer "user_id"
+    t.bigint "game_id"
+    t.bigint "user_id"
     t.integer "time"
     t.index ["game_id"], name: "index_goals_on_game_id"
     t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "tournament_id"
+    t.bigint "tournament_id"
     t.integer "fase"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -52,15 +55,15 @@ ActiveRecord::Schema.define(version: 20180106205416) do
   end
 
   create_table "matches_teams", force: :cascade do |t|
-    t.integer "game_id"
-    t.integer "match_id"
+    t.bigint "game_id"
+    t.bigint "match_id"
     t.index ["game_id"], name: "index_matches_teams_on_game_id"
     t.index ["match_id"], name: "index_matches_teams_on_match_id"
   end
 
   create_table "participations", force: :cascade do |t|
-    t.integer "game_id"
-    t.integer "team_id"
+    t.bigint "game_id"
+    t.bigint "team_id"
     t.boolean "is_winner", default: false, null: false
     t.integer "goals", default: 0, null: false
     t.index ["game_id"], name: "index_participations_on_game_id"
@@ -68,8 +71,8 @@ ActiveRecord::Schema.define(version: 20180106205416) do
   end
 
   create_table "partnerships", force: :cascade do |t|
-    t.integer "team_id"
-    t.integer "user_id"
+    t.bigint "team_id"
+    t.bigint "user_id"
     t.integer "state"
     t.index ["team_id"], name: "index_partnerships_on_team_id"
     t.index ["user_id"], name: "index_partnerships_on_user_id"
