@@ -1,3 +1,3 @@
 json.set! :players do
-    json.array! @players, :id, :name, :username, :score
+    json.array! @players, :id, :email, :nickname, :age, :image_url
 end
